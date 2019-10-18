@@ -4,7 +4,7 @@
 // src/github.com/ejber-ozkan/common-base-api
 // dep (install and init-ed)
 // bin src pkg folders required
-// dep ensure -add github.com/gorilla/mux
+// go mod init (migrated)
 
 package main
 
@@ -38,7 +38,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 func StatusHandler(w http.ResponseWriter, r *http.Request) {
 	Status := models.Status{}
 
-	Status.Level = "AMBER"
+	Status.Level = "GREEN"
 	Status.Description = "Everything is A OK"
 
 	StatusBytes, err := json.Marshal(Status)
