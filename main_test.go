@@ -7,7 +7,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/ejber-ozkan/common-base-api/handlers"
 	"github.com/ejber-ozkan/common-base-api/models"
+	"github.com/ejber-ozkan/common-base-api/routes"
 )
 
 func TestHandler(t *testing.T) {
@@ -20,7 +22,7 @@ func TestHandler(t *testing.T) {
 
 	recorder := httptest.NewRecorder()
 
-	hf := http.HandlerFunc(handler)
+	hf := http.HandlerFunc(handlers.HelloHandler)
 
 	hf.ServeHTTP(recorder, req)
 
@@ -37,7 +39,7 @@ func TestHandler(t *testing.T) {
 }
 
 func TestRouter(t *testing.T) {
-	r := newRouter()
+	r := routes.NewRouter()
 
 	mockServer := httptest.NewServer(r)
 
@@ -67,7 +69,7 @@ func TestRouter(t *testing.T) {
 }
 
 func TestRouterForNoExistentRoute(t *testing.T) {
-	r := newRouter()
+	r := routes.NewRouter()
 
 	mockServer := httptest.NewServer(r)
 
@@ -97,7 +99,7 @@ func TestRouterForNoExistentRoute(t *testing.T) {
 }
 
 func TestStatusRouter(t *testing.T) {
-	r := newRouter()
+	r := routes.NewRouter()
 
 	mockServer := httptest.NewServer(r)
 
