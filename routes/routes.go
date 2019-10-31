@@ -4,10 +4,9 @@ import (
 	"net/http"
 
 	"github.com/ejber-ozkan/common-base-api/handlers"
-	"github.com/ejber-ozkan/common-base-api/utils"
-	"github.com/gorilla/mux"
 )
 
+//Route struct to build an array against
 type Route struct {
 	Name        string
 	Method      string
@@ -15,27 +14,8 @@ type Route struct {
 	HandlerFunc http.HandlerFunc
 }
 
+//Routes an array full of routes
 type Routes []Route
-
-// NewRouter a list of routes to follow on the service
-func NewRouter() *mux.Router {
-
-	router := mux.NewRouter().StrictSlash(true)
-	for _, route := range routes {
-		var handler http.Handler
-
-		handler = route.HandlerFunc
-		handler = utils.APILoggingHandler(handler)
-
-		router.
-			Methods(route.Method).
-			Path(route.Pattern).
-			Name(route.Name).
-			Handler(handler)
-	}
-
-	return router
-}
 
 var routes = Routes{
 	Route{
