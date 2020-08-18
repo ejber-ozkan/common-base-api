@@ -18,7 +18,9 @@ Package gorilla/mux implements a request router and dispatcher for matching inco
 
 github.com/gorilla/mux
 
-Should work with docker, you may need to play with [Dockerfile](Dockerfile)
+## Build 
+
+This should work with docker, you may need to play with [Dockerfile](Dockerfile)
 
 Build it
 
