@@ -1,5 +1,5 @@
 FROM golang:latest AS builder
-LABEL maintainer="Ejber Ozkan <ejber@ozkan.co.uk>"
+LABEL maintainer="Ejber Ozkan <ejber.ozkan@bbc.co.uk>"
 ADD . /app/api
 WORKDIR /app/api
 RUN go mod download
