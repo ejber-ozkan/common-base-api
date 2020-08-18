@@ -2,7 +2,7 @@
 
 This is an 'Hello World' API.
 
-Mainly built to learn Golang.
+Mainly built for me to learn Golang.
 
 Using various go modules:
 
