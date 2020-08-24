@@ -18,7 +18,7 @@ Package gorilla/mux implements a request router and dispatcher for matching inco
 
 github.com/gorilla/mux
 
-## Build 
+## Build
 
 This should work with docker, you may need to play with [Dockerfile](Dockerfile)
 
@@ -43,6 +43,6 @@ Then point your browser to see some output:
 
 /status returns a JSON object
 
-the example also uses LoggingHandler from the Gorilla modules to output to stdout any response. 
+the example also uses LoggingHandler from the Gorilla modules to output to stdout any response.
 
 Has tests as well, as an example of bringing it together.

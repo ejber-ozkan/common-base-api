@@ -13,8 +13,8 @@ import (
 )
 
 func TestHandler(t *testing.T) {
-
-	req, err := http.NewRequest("GET", "", nil)
+	var err error
+	request, err := http.NewRequest("GET", "", nil)
 
 	if err != nil {
 		t.Fatal(err)
@@ -22,9 +22,9 @@ func TestHandler(t *testing.T) {
 
 	recorder := httptest.NewRecorder()
 
-	hf := http.HandlerFunc(handlers.HelloHandler)
+	handlerFunction := http.HandlerFunc(handlers.HelloHandler)
 
-	hf.ServeHTTP(recorder, req)
+	handlerFunction.ServeHTTP(recorder, request)
 
 	if status := recorder.Code; status != http.StatusOK {
 		t.Errorf("Handler returned wrong status: got %v want %v", status, http.StatusOK)
@@ -39,91 +39,94 @@ func TestHandler(t *testing.T) {
 }
 
 func TestRouter(t *testing.T) {
+	var err error
 	r := routes.NewRouter()
 
 	mockServer := httptest.NewServer(r)
 
-	resp, err := http.Get(mockServer.URL + "/hello")
+	response, err := http.Get(mockServer.URL + "/hello")
 
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if resp.StatusCode != http.StatusOK {
-		t.Errorf("Status should ok,got %d", resp.StatusCode)
+	if response.StatusCode != http.StatusOK {
+		t.Errorf("Status should ok,got %d", response.StatusCode)
 	}
 
-	defer resp.Body.Close()
+	defer response.Body.Close()
 
-	bytes, err := ioutil.ReadAll(resp.Body)
+	bytes, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	respString := string(bytes)
+	responseString := string(bytes)
 	expected := "Hello World!"
 
-	if respString != expected {
-		t.Errorf("Response should be %s, got %s", expected, respString)
+	if responseString != expected {
+		t.Errorf("Response should be %s, got %s", expected, responseString)
 	}
 }
 
 func TestRouterForNoExistentRoute(t *testing.T) {
-	r := routes.NewRouter()
+	var err error
+	router := routes.NewRouter()
 
-	mockServer := httptest.NewServer(r)
+	mockServer := httptest.NewServer(router)
 
-	resp, err := http.Post(mockServer.URL+"/hello", "", nil)
+	response, err := http.Post(mockServer.URL+"/hello", "", nil)
 
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	// 405 (method not allowed)
-	if resp.StatusCode != http.StatusMethodNotAllowed {
-		t.Errorf("Status should be 405, got %d", resp.StatusCode)
+	if response.StatusCode != http.StatusMethodNotAllowed {
+		t.Errorf("Status should be 405, got %d", response.StatusCode)
 	}
 
-	defer resp.Body.Close()
-	b, err := ioutil.ReadAll(resp.Body)
+	defer response.Body.Close()
+	b, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		t.Fatal(err)
 	}
-	respString := string(b)
+	responseString := string(b)
 	expected := ""
 
-	if respString != expected {
-		t.Errorf("Response should be %s, got %s", expected, respString)
+	if responseString != expected {
+		t.Errorf("Response should be %s, got %s", expected, responseString)
 	}
 
 }
 
 func TestStatusRouter(t *testing.T) {
-	r := routes.NewRouter()
+	var err error
+	router := routes.NewRouter()
 
-	mockServer := httptest.NewServer(r)
+	mockServer := httptest.NewServer(router)
 
-	resp, err := http.Get(mockServer.URL + "/status")
+	response, err := http.Get(mockServer.URL + "/status")
 
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if resp.StatusCode != http.StatusOK {
-		t.Errorf("Status should ok,got %d", resp.StatusCode)
+	if response.StatusCode != http.StatusOK {
+		t.Errorf("Status should ok,got %d", response.StatusCode)
 	}
 
-	defer resp.Body.Close()
-	bytes, err := ioutil.ReadAll(resp.Body)
+	defer response.Body.Close()
+	bytes, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	status := models.Status{}
-	derr := json.Unmarshal(bytes, &status)
+	err = json.Unmarshal(bytes, &status)
 
-	if derr != nil {
-		t.Fatal(derr)
+	if err != nil {
+		t.Fatal(err)
 	}
 
 	if status.Level != "GREEN" {
