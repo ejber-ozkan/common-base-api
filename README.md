@@ -20,15 +20,32 @@ github.com/gorilla/mux
 
 ## Build
 
-This should work with docker, you may need to play with [Dockerfile](Dockerfile)
+To run tests
 
-Build it
+```bash
+
+go test main_test.go
+
+```
+
+To build on local machine
+
+```bash
+
+go build main.go
+# run ./main or #main.exe
+
+```
+
+This should also work with docker, you may need to play with [Dockerfile](Dockerfile)
+
+Build it via docker
 
 ```bash
 docker build -t common-base-api .
 ```
 
-Then run it
+Then run it via docker
 
 ```bash
 docker run -p 8080:8080 common-base-api:latest
