@@ -13,10 +13,13 @@ import (
 	"net/http"
 
 	"github.com/ejber-ozkan/common-base-api/routes"
+	"github.com/ejber-ozkan/common-base-api/utils"
 )
 
 func main() {
 	router := routes.NewRouter()
 
-	log.Fatal(http.ListenAndServe(":8080", router))
+	loggedRouter := utils.APILoggingHandler(router)
+
+	log.Fatal(http.ListenAndServe(":8080", loggedRouter))
 }

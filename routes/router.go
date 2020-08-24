@@ -3,7 +3,6 @@ package routes
 import (
 	"net/http"
 
-	"github.com/ejber-ozkan/common-base-api/utils"
 	"github.com/gorilla/mux"
 )
 
@@ -15,7 +14,8 @@ func NewRouter() *mux.Router {
 		var handler http.Handler
 
 		handler = route.HandlerFunc
-		handler = utils.APILoggingHandler(handler)
+
+		//handler = utils.APILoggingHandler(handler)
 
 		router.
 			Methods(route.Method).
@@ -23,8 +23,6 @@ func NewRouter() *mux.Router {
 			Name(route.Name).
 			Handler(handler)
 	}
-
-	//router.NotFoundHandler = utils.APILoggingHandler(NotFound)
 
 	return router
 }
