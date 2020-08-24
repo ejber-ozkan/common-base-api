@@ -35,3 +35,9 @@ func StatusHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Write(StatusBytes)
 }
+
+// HelloHandler returns hello world!
+//func StaticHandler(w http.ResponseWriter, r *http.Request) {
+//	PathPrefix(staticDir).
+//	Handler(http.StripPrefix(staticDir, http.FileServer(http.Dir("."+staticDir))))
+//}
