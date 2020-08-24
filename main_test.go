@@ -133,3 +133,22 @@ func TestStatusRouter(t *testing.T) {
 		t.Errorf("Status should be GREEN,got %s", status.Level)
 	}
 }
+
+func TestNotFoundHandler(t *testing.T) {
+	var err error
+	router := routes.NewRouter()
+
+	mockServer := httptest.NewServer(router)
+
+	response, err := http.Post(mockServer.URL+"/doesnotexist", "", nil)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// 404 (method not found)
+	if response.StatusCode != http.StatusNotFound {
+		t.Errorf("Status should be 404, got %d", response.StatusCode)
+	}
+
+}

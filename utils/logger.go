@@ -15,5 +15,6 @@ func APILoggingHandler(h http.Handler) http.Handler {
 	//if err != nil {
 	//	panic(err)
 	//}
+
 	return handlers.LoggingHandler(os.Stdout, h)
 }

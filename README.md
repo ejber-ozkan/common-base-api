@@ -54,6 +54,7 @@ docker run -p 8080:8080 common-base-api:latest
 Then point your browser to see some output:
 
 <http://localhost:8080/hello>
+
 <http://localhost:8080/status>
 
 /hello outputs in plain text

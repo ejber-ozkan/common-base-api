@@ -24,5 +24,7 @@ func NewRouter() *mux.Router {
 			Handler(handler)
 	}
 
+	//router.NotFoundHandler = utils.APILoggingHandler(NotFound)
+
 	return router
 }

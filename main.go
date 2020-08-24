@@ -1,4 +1,4 @@
-// Base API package that all servcies could follow as a pattern
+// Base API package that all services could follow as a pattern
 
 // My notes for later export GOPATH="/Users/ejberozkan/projects/"
 // src/github.com/ejber-ozkan/common-base-api
@@ -9,6 +9,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/ejber-ozkan/common-base-api/routes"
@@ -16,5 +17,6 @@ import (
 
 func main() {
 	router := routes.NewRouter()
-	http.ListenAndServe(":8080", router)
+
+	log.Fatal(http.ListenAndServe(":8080", router))
 }
