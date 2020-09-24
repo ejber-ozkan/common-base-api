@@ -6,17 +6,25 @@ import (
 	"net/http"
 
 	"github.com/ejber-ozkan/common-base-api/models"
+	opentracing "github.com/opentracing/opentracing-go"
 )
 
 // HelloHandler returns hello world!
 func HelloHandler(w http.ResponseWriter, r *http.Request) {
+	tracer := opentracing.GlobalTracer()
+	span := tracer.StartSpan("HelloHandler")
 	w.Header().Set("Content-Type", "text/plain; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "Hello World!")
+	span.Finish()
 }
 
 // StatusHandler return a status of this common service endpoint in JSON
 func StatusHandler(w http.ResponseWriter, r *http.Request) {
+
+	tracer := opentracing.GlobalTracer()
+	span := tracer.StartSpan("StatusHandler")
+
 	Status := models.Status{}
 
 	Status.Level = "GREEN"
@@ -34,6 +42,7 @@ func StatusHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Write(StatusBytes)
+	span.Finish()
 }
 
 // HelloHandler returns hello world!
