@@ -9,7 +9,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
@@ -30,12 +29,13 @@ func main() {
 	tracer, closer, err := cfg.NewTracer()
 
 	if err != nil {
-		fmt.Println(fmt.Errorf("Error: %v", err))
+		log.Printf("Could not initialize jaeger tracer: %s", err.Error())
+		return
 	}
+	defer closer.Close()
 
 	// Set the singleton opentracing.Tracer with the Jaeger tracer.
 	opentracing.SetGlobalTracer(tracer)
-	defer closer.Close()
 
 	router := routes.NewRouter()
 
