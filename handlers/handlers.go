@@ -14,8 +14,11 @@ func HelloHandler(w http.ResponseWriter, r *http.Request) {
 	tracer := opentracing.GlobalTracer()
 	span := tracer.StartSpan("HelloHandler")
 	w.Header().Set("Content-Type", "text/plain; charset=UTF-8")
+	span.SetTag("headerSet", "text/plain; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
+	span.SetTag("headerSet", http.StatusOK)
 	fmt.Fprintf(w, "Hello World!")
+	span.SetTag("fnt print out", "Hello World!")
 	span.Finish()
 }
 
@@ -44,9 +47,3 @@ func StatusHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(StatusBytes)
 	span.Finish()
 }
-
-// HelloHandler returns hello world!
-//func StaticHandler(w http.ResponseWriter, r *http.Request) {
-//	PathPrefix(staticDir).
-//	Handler(http.StripPrefix(staticDir, http.FileServer(http.Dir("."+staticDir))))
-//}

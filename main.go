@@ -28,9 +28,6 @@ func main() {
 		return
 	}
 
-	//jLogger := jaegerlog.StdLogger
-	//jMetricsFactory := metrics.NullFactory
-	// Initialize tracer with a logger and a metrics factory
 	tracer, closer, err := cfg.NewTracer()
 
 	if err != nil {
@@ -43,12 +40,11 @@ func main() {
 	defer closer.Close()
 
 	tracer = opentracing.GlobalTracer()
-	span := tracer.StartSpan("router")
 
 	router := routes.NewRouter()
 
 	loggedRouter := utils.APILoggingHandler(router)
 
 	log.Fatal(http.ListenAndServe(":8080", loggedRouter))
-	span.Finish()
+
 }
