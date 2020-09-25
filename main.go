@@ -24,7 +24,7 @@ func main() {
 	cfg, err := jaegercfg.FromEnv()
 
 	if err != nil {
-		log.Printf("Could not initialize jaeger tracer: %s", err.Error())
+		log.Printf("Could not parse Jaeger env vars: %s", err.Error())
 		return
 	}
 
@@ -37,14 +37,18 @@ func main() {
 		log.Printf("Could not initialize jaeger tracer: %s", err.Error())
 		return
 	}
-	defer closer.Close()
 
 	// Set the singleton opentracing.Tracer with the Jaeger tracer.
 	opentracing.SetGlobalTracer(tracer)
+	defer closer.Close()
+
+	tracer = opentracing.GlobalTracer()
+	span := tracer.StartSpan("router")
 
 	router := routes.NewRouter()
 
 	loggedRouter := utils.APILoggingHandler(router)
 
 	log.Fatal(http.ListenAndServe(":8080", loggedRouter))
+	span.Finish()
 }
