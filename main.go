@@ -23,6 +23,11 @@ func main() {
 
 	cfg, err := jaegercfg.FromEnv()
 
+	if err != nil {
+		log.Printf("Could not initialize jaeger tracer: %s", err.Error())
+		return
+	}
+
 	//jLogger := jaegerlog.StdLogger
 	//jMetricsFactory := metrics.NullFactory
 	// Initialize tracer with a logger and a metrics factory
