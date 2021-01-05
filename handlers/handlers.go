@@ -13,12 +13,13 @@ import (
 func HelloHandler(w http.ResponseWriter, r *http.Request) {
 	tracer := opentracing.GlobalTracer()
 	span := tracer.StartSpan("HelloHandler")
+
 	w.Header().Set("Content-Type", "text/plain; charset=UTF-8")
-	span.SetTag("headerSet", "text/plain; charset=UTF-8")
+	span.SetTag("Content-Type", "text/plain; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	span.SetTag("headerSet", http.StatusOK)
+	span.SetTag("Http-Status", http.StatusOK)
 	fmt.Fprintf(w, "Hello World!")
-	span.SetTag("fnt print out", "Hello World!")
+	span.SetTag("fmt print out", "Hello World!")
 	span.Finish()
 }
 
@@ -41,6 +42,8 @@ func StatusHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(fmt.Errorf("Error: %v", err))
 		w.WriteHeader(http.StatusInternalServerError)
+		span.LogEvent("Internal server error: " + err.Error())
+		span.SetTag("error", true)
 		return
 	}
 

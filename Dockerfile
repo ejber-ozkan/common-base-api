@@ -10,7 +10,8 @@ FROM alpine:latest AS setup-telegraf
 ENV INFLUX_HOSTS \"http://influxdb:8086\"
 ENV INFLUX_DB telegraf
 ENV EXTRA_PLUGINS=""
-RUN echo "http://dl-2.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+#RUN echo "http://dl-2.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+RUN echo "http://dl-2.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
 #RUN apk --no-cache add --update telegraf
 RUN apk --no-cache add telegraf
 RUN mkdir /etc/telegraf
