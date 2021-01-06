@@ -14,32 +14,9 @@ import (
 
 	"github.com/ejber-ozkan/common-base-api/routes"
 	"github.com/ejber-ozkan/common-base-api/utils"
-
-	opentracing "github.com/opentracing/opentracing-go"
-	jaegercfg "github.com/uber/jaeger-client-go/config"
 )
 
 func main() {
-
-	cfg, err := jaegercfg.FromEnv()
-
-	if err != nil {
-		log.Printf("Could not parse Jaeger env vars: %s", err.Error())
-		return
-	}
-
-	tracer, closer, err := cfg.NewTracer()
-
-	if err != nil {
-		log.Printf("Could not initialize jaeger tracer: %s", err.Error())
-		return
-	}
-
-	// Set the singleton opentracing.Tracer with the Jaeger tracer.
-	opentracing.SetGlobalTracer(tracer)
-	defer closer.Close()
-
-	tracer = opentracing.GlobalTracer()
 
 	router := routes.NewRouter()
 
